@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y2K LOVE 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #ffd1dc;
+            font-family: 'VT323', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Subtle, Smooth Background Waves */
+        .wave-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .wave-layer {
+            position: absolute;
+            width: 400%;
+            height: 200%;
+            bottom: -50%;
+            left: 0;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 800" xmlns="http://www.w3.org/2000/svg"><path fill="%23ff69b4" fill-opacity="0.08" d="M0,400 Q360,250 720,400 T1440,400 L1440,800 L0,800 Z"></path></svg>') repeat-x;
+            background-size: 1440px 100%;
+            animation: waveMoveRight 55s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            transform: translate3d(0, 0, 0);
+        }
+
+        .wave-layer:nth-child(2) {
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 800" xmlns="http://www.w3.org/2000/svg"><path fill="%23ff1493" fill-opacity="0.05" d="M0,450 Q360,300 720,450 T1440,450 L1440,800 L0,800 Z"></path></svg>') repeat-x;
+            background-size: 1440px 100%;
+            animation: waveMoveLeft 75s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            top: 40px;
+        }
+
+        .wave-layer:nth-child(3) {
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1440 800" xmlns="http://www.w3.org/2000/svg"><path fill="%23f48fb1" fill-opacity="0.06" d="M0,350 Q360,200 720,350 T1440,350 L1440,800 L0,800 Z"></path></svg>') repeat-x;
+            background-size: 1440px 100%;
+            animation: waveMoveRight 95s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            top: -20px;
+        }
+
+        @keyframes waveMoveRight {
+            0% { transform: translateX(0) translateZ(0); }
+            100% { transform: translateX(-50%) translateZ(0); }
+        }
+
+        @keyframes waveMoveLeft {
+            0% { transform: translateX(-50%) translateZ(0); }
+            100% { transform: translateX(0) translateZ(0); }
+        }
+
+        /* Floating Y2K Icons */
+        .decal {
+            position: absolute;
+            z-index: 1;
+            user-select: none;
+            animation: floatIcon 8s ease-in-out infinite;
+            width: 70px;
+            height: 70px;
+        }
+
+        @keyframes floatIcon {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(10deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Background Text Boxes */
+        .mini-window {
+            position: absolute;
+            background: #ffb6c1;
+            border: 2px solid #ff1493;
+            box-shadow: 3px 3px 0px #ff1493;
+            z-index: 2;
+            animation: floatIcon 9s ease-in-out infinite;
+            padding: 2px;
+            display: flex;
+            flex-direction: column;
+            width: fit-content;
+        }
+
+        .mini-window:nth-child(even) {
+            animation-duration: 11s;
+            animation-direction: reverse;
+        }
+
+        .mini-title {
+            background: #ff1493;
+            color: white;
+            font-size: 0.9rem;
+            padding: 2px 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .mini-content {
+            background: #fff0f5;
+            color: #ff1493;
+            padding: 10px;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        /* Main Window Styling */
+        .window {
+            background: #ffb6c1;
+            border: 2px solid #ff1493;
+            box-shadow: 6px 6px 0px #ff1493;
+            width: 90%;
+            max-width: 450px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title-bar {
+            background: #ff1493;
+            color: white;
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            border-bottom: 2px solid #ff1493;
+        }
+
+        .title-bar-btn {
+            background: #ffb6c1;
+            border: 2px solid white;
+            color: #ff1493;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .window-content {
+            background: #fff0f5;
+            padding: 30px 20px;
+            text-align: center;
+            border: 2px solid white;
+            margin: 2px;
+        }
+
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            color: #ff1493;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 0px #ffb6c1;
+        }
+
+        p {
+            font-size: 1.5rem;
+            color: #ff1493;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 50px;
+        }
+
+        button.action-btn {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            padding: 10px 20px;
+            background: #ffb6c1;
+            color: #ff1493;
+            border: 2px solid #ff1493;
+            box-shadow: 3px 3px 0px #ff1493;
+            cursor: pointer;
+            outline: none;
+        }
+
+        button.action-btn:active {
+            box-shadow: 1px 1px 0px #ff1493;
+            transform: translate(2px, 2px);
+        }
+
+        #btnNo {
+            position: relative;
+            transition: left 0.2s ease, top 0.2s ease;
+        }
+
+        input[type="date"], select {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 25px;
+            border: 2px solid #ff1493;
+            background: white;
+            font-family: 'VT323', monospace;
+            font-size: 1.5rem;
+            color: #ff1493;
+            box-shadow: inset 2px 2px 0px #ffb6c1;
+            outline: none;
+        }
+
+        #step2, #step3, #step4 {
+            display: none;
+        }
+
+        .explode {
+            animation: pixelExplode 0.4s forwards;
+            pointer-events: none;
+        }
+
+        #yt-player-container {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .music-hint {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: #ff1493;
+            font-size: 1.2rem;
+            z-index: 5;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        @keyframes pixelExplode {
+            0% { transform: scale(1); filter: invert(0); }
+            25% { transform: scale(1.5) rotate(10deg); filter: invert(1); background: red; }
+            50% { transform: scale(2) rotate(-10deg); opacity: 0.5; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+    <source src="eyes.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="wave-bg">
+        <div class="wave-layer"></div>
+        <div class="wave-layer"></div>
+        <div class="wave-layer"></div>
+    </div>
+
+    <svg class="decal" style="top: 8%; left: 5%;" viewBox="0 0 100 100">
+        <path d="M20,40 Q10,20 30,20 Q50,20 50,40 Q50,20 70,20 Q90,20 80,40 Q70,60 50,85 Q30,60 20,40 Z" fill="#ff1493"/>
+        <circle cx="40" cy="40" r="4" fill="#fff"/>
+        <circle cx="60" cy="40" r="4" fill="#fff"/>
+        <path d="M45,50 Q50,55 55,50" stroke="#fff" stroke-width="3" fill="none"/>
+    </svg>
+
+    <svg class="decal" style="top: 15%; right: 10%; animation-delay: 1s;" viewBox="0 0 100 100">
+        <path d="M20,30 L35,50 L20,70 L40,70 L50,55 L60,70 L80,70 L65,50 L80,30 L60,30 L50,45 L40,30 Z" fill="#ff69b4" stroke="#ff1493" stroke-width="3"/>
+        <circle cx="50" cy="52" r="8" fill="#ff1493"/>
+    </svg>
+
+    <svg class="decal" style="top: 75%; left: 12%; animation-delay: 2s;" viewBox="0 0 100 100">
+        <polygon points="50,5 64,36 98,36 70,57 81,91 50,70 19,91 30,57 2,36 36,36" fill="#fff" stroke="#ff1493" stroke-width="4"/>
+    </svg>
+
+    <svg class="decal" style="top: 85%; right: 8%; animation-delay: 1.5s;" viewBox="0 0 100 100">
+        <circle cx="40" cy="60" r="25" fill="#ff69b4" stroke="#ff1493" stroke-width="3"/>
+        <circle cx="70" cy="55" r="20" fill="#ff69b4" stroke="#ff1493" stroke-width="3"/>
+        <path d="M45,37 Q50,15 70,37" stroke="#ff1493" stroke-width="4" fill="none"/>
+    </svg>
+
+    <svg class="decal" style="top: 45%; left: 3%; animation-delay: 3s;" viewBox="0 0 100 100">
+        <rect x="25" y="20" width="50" height="60" rx="10" fill="#fff" stroke="#ff1493" stroke-width="4"/>
+        <circle cx="40" cy="40" r="5" fill="#ff1493"/>
+        <circle cx="60" cy="40" r="5" fill="#ff1493"/>
+        <path d="M45,50 Q50,55 55,50" stroke="#ff1493" stroke-width="3" fill="none"/>
+        <path d="M25,35 L15,25" stroke="#ff1493" stroke-width="3"/>
+    </svg>
+
+    <svg class="decal" style="top: 30%; left: 22%; animation-delay: 0.5s;" viewBox="0 0 100 100">
+        <path d="M10,40 Q25,10 40,40 Q50,20 60,40 Q75,10 90,40 Q100,70 50,95 Q0,70 10,40 Z" fill="#ffb6c1" stroke="#ff1493" stroke-width="3"/>
+    </svg>
+
+    <div class="mini-window" style="top: 12%; left: 32%;">
+        <div class="mini-title"><span>msg.exe</span><span>x</span></div>
+        <div class="mini-content">i hope u say yes :3</div>
+    </div>
+
+    <div class="mini-window" style="top: 68%; right: 14%;">
+        <div class="mini-title"><span>vibe.txt</span><span>x</span></div>
+        <div class="mini-content">i think our vibes match ngl</div>
+    </div>
+
+    <div class="mini-window" style="top: 22%; right: 6%;">
+        <div class="mini-title"><span>plan.bat</span><span>x</span></div>
+        <div class="mini-content">we shall have a great time</div>
+    </div>
+
+    <div class="window" id="step1">
+        <div class="title-bar">
+            <span>Question.exe</span>
+            <div class="title-bar-btn">X</div>
+        </div>
+        <div class="window-content">
+            <h1>Do you want to<br>go out with me?</h1>
+            <div class="btn-container">
+                <button class="action-btn" id="btnYes">✔ Yes</button>
+                <button class="action-btn" id="btnNo">✖ No</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="window" id="step2">
+        <div class="title-bar">
+            <span>Schedule.exe</span>
+            <div class="title-bar-btn">X</div>
+        </div>
+        <div class="window-content">
+            <h1>Yay! I'm so happy! 🥰</h1>
+            <p>Select a Date:</p>
+            <input type="date" id="datePicker">
+            <br>
+            <button class="action-btn" id="btnNextToActivity">PLAY ▶</button>
+        </div>
+    </div>
+
+    <div class="window" id="step3">
+        <div class="title-bar">
+            <span>Vibe_Check.exe</span>
+            <div class="title-bar-btn">X</div>
+        </div>
+        <div class="window-content">
+            <h1>Perfect! 🗓️</h1>
+            <p>What's the vibe?</p>
+            <select id="activityPicker">
+                <option value="Fine Dine">Fine Dine 🍷</option>
+                <option value="KFC in Formal Wear">KFC with Formal Clothing 🍗👔</option>
+                <option value="Convention">Going to a Convention 🎟️</option>
+                <option value="The Fair">Going to the Fair 🎡</option>
+                <option value="Long Drive">Going on a Long Drive 🚗</option>
+            </select>
+            <br>
+            <button class="action-btn" id="btnFinish">SAVE 💾</button>
+        </div>
+    </div>
+
+    <div class="window" id="step4">
+        <div class="title-bar">
+            <span>Love_Bug.txt</span>
+            <div class="title-bar-btn">X</div>
+        </div>
+        <div class="window-content">
+            <h1>It's a Date! 💘</h1>
+            <p>Downloading itinerary...</p>
+            <p>See you then! 🎀</p>
+        </div>
+    </div>
+
+    <script>
+// --- LOCAL AUDIO LOGIC ---
+const bgMusic = document.getElementById('bg-music');
+let musicStarted = false;
+
+function forcePlayMusic() {
+    if (!musicStarted) {
+        bgMusic.volume = 0.6; // Set volume (0.0 to 1.0)
+        bgMusic.play().then(() => {
+            musicStarted = true;
+            // Hide the floating hint once music starts
+            const hint = document.querySelector('.music-hint');
+            if(hint) hint.style.display = 'none';
+        }).catch(err => {
+            console.log("Browser still blocking audio, waiting for user click...");
+        });
+    }
+}
+
+// Listen for the first interaction to start the music
+window.addEventListener('click', forcePlayMusic);
+window.addEventListener('touchstart', forcePlayMusic);
+        // --- DOM ELEMENTS ---
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const step3 = document.getElementById('step3');
+        const step4 = document.getElementById('step4');
+        
+        const btnNo = document.getElementById('btnNo');
+        const btnYes = document.getElementById('btnYes');
+        const btnNextToActivity = document.getElementById('btnNextToActivity');
+        const btnFinish = document.getElementById('btnFinish');
+
+        let selectedDate = "";
+        let selectedActivity = "";
+
+        // --- SOUND EFFECTS ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playExplosionSound() {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            
+            gainNode.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.3);
+        }
+
+        function playCelebrationSound() {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const notes = [440, 554.37, 659.25, 880];
+            
+            notes.forEach((freq, index) => {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                
+                osc.type = 'square';
+                osc.frequency.value = freq;
+                
+                const startTime = audioCtx.currentTime + (index * 0.1);
+                gainNode.gain.setValueAtTime(0, startTime);
+                gainNode.gain.linearRampToValueAtTime(0.2, startTime + 0.05);
+                gainNode.gain.linearRampToValueAtTime(0, startTime + 0.2);
+                
+                osc.start(startTime);
+                osc.stop(startTime + 0.2);
+            });
+        }
+
+        // --- BUTTON LOGIC ---
+        btnNo.addEventListener('mouseover', function(e) {
+            forcePlayMusic(); // Also force music if they try to touch the button
+
+            if (Math.random() < 0.15 && !btnNo.classList.contains('explode')) {
+                btnNo.innerText = '💥';
+                btnNo.classList.add('explode');
+                playExplosionSound();
+                
+                setTimeout(() => {
+                    btnNo.style.display = 'none';
+                    btnNo.classList.remove('explode');
+                    
+                    setTimeout(() => {
+                        btnNo.innerText = '✖ No';
+                        btnNo.style.display = 'inline-block';
+                    }, 1500);
+                }, 400);
+                return;
+            }
+
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const btnWidth = btnNo.offsetWidth;
+            const btnHeight = btnNo.offsetHeight;
+
+            const newLeft = Math.floor(Math.random() * (windowWidth - btnWidth));
+            const newTop = Math.floor(Math.random() * (windowHeight - btnHeight));
+
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = `${newLeft}px`;
+            btnNo.style.top = `${newTop}px`;
+        });
+
+        function fireRetroConfetti() {
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+
+                const particleCount = 50 * (timeLeft / duration);
+                
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                    colors: ['#ff1493', '#ffffff', '#ffb6c1'],
+                    shapes: ['square']
+                }));
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                    shapes: ['heart'],
+                    colors: ['#ff1493']
+                }));
+            }, 250);
+        }
+
+        btnYes.addEventListener('click', () => {
+            btnNo.style.display = 'none'; 
+            playCelebrationSound();
+            fireRetroConfetti();
+            
+            step1.style.display = 'none';
+            step2.style.display = 'block';
+        });
+
+        btnNextToActivity.addEventListener('click', () => {
+            const dateInput = document.getElementById('datePicker').value;
+            if (!dateInput) {
+                alert("Please select a date!");
+                return;
+            }
+            selectedDate = dateInput;
+            step2.style.display = 'none';
+            step3.style.display = 'block';
+        });
+
+        btnFinish.addEventListener('click', () => {
+            selectedActivity = document.getElementById('activityPicker').value;
+            
+            step3.style.display = 'none';
+            step4.style.display = 'block';
+
+            const fileContent = 
+`=========================
+  Y2K LOVE BUG PROTOCOL  
+=========================
+STATUS: THEY SAID YES! <3
+DATE: ${selectedDate}
+VIBE: ${selectedActivity}
+=========================
+Can't wait! xoxo`;
+
+            const blob = new Blob([fileContent], { type: 'text/plain' });
+            const downloadUrl = URL.createObjectURL(blob);
+            
+            const downloadLink = document.createElement('a');
+            downloadLink.href = downloadUrl;
+            downloadLink.download = "Love_Bug_Protocol.txt";
+            
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(downloadUrl);
+        });
+    </script>
+</body>
+</html>
