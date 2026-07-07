@@ -1,10 +1,10 @@
-# Y2K Love Bug Protocol 💖💾
+# ASKING OUT <3
 
 A cute, retro, Windows 98/Y2K-themed interactive website to ask your crush out on a date! Built with pure HTML, CSS, and vanilla JavaScript. 
 
 Check out the live site here: https://abdrash12.github.io/Ask_Out_Your_Date/
 
-## ✨ Features
+## Features
 * **Millennial Pink Aesthetic:** Custom pixel-art SVG graphics, grid backgrounds, and classic Windows dialogue boxes.
 * **The "Unclickable" No Button:** The 'No' button runs away from the cursor and has a 15% chance to "explode" with a retro 8-bit sound effect.
 * **Celebration Mode:** Clicking 'Yes' triggers a retro chime and a shower of hot pink/white pixel confetti and hearts.
@@ -12,7 +12,7 @@ Check out the live site here: https://abdrash12.github.io/Ask_Out_Your_Date/
 * **Itinerary Export:** Generates and downloads a custom `.txt` file with the final date details.
 * **Background Music:** Plays your favorite local `.mp3` track the moment they interact with the page!
 
-## 🛠️ How to Customize for Yourself
+## How to Customize for Yourself
 
 If you want to fork this and use it for your own date, here is how to set it up:
 
